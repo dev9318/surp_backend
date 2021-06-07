@@ -1,3 +1,10 @@
 const express = require("express");
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+
+// the express app
+const app = express();
+
+
+// set up body parser
+app.use(bodyParser.json());
