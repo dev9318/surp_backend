@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const AccidentSchema = new Schema({
     Date: {
-        type: String,
+        type: Date,
         required: [true, 'field is required']
     },
     Type: {
@@ -12,27 +12,27 @@ const AccidentSchema = new Schema({
         required: [true, 'field is required']
     },
     Location: {
-        type: Boolean,
+        type: String,
         required: [true, 'field is required']
     },
     Company: {
-        type: Boolean,
+        type: String,
         required: [true, 'field is required']
     },
     Deaths: {
-        type: Boolean,
+        type: String,
         required: [true, 'field is required']
     },
     Injured: {
-        type: Boolean,
+        type: String,
         required: [true, 'field is required']
     },
     Source: {
-        type: Boolean,
+        type: String,
         required: [true, 'field is required']
     },
 
-});
+}, { timestamps: true });
 
 const Accidents = mongoose.model('accidents', AccidentSchema);
 
