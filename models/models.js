@@ -20,11 +20,11 @@ const AccidentSchema = new Schema({
         required: [true, 'field is required']
     },
     Deaths: {
-        type: String,
+        type: Number,
         required: [true, 'field is required']
     },
     Injured: {
-        type: String,
+        type: Number,
         required: [true, 'field is required']
     },
     Source: {
@@ -34,6 +34,6 @@ const AccidentSchema = new Schema({
 
 }, { timestamps: true });
 
-const Accidents = mongoose.model('accidents', AccidentSchema);
+const Accident = mongoose.model('accidents', AccidentSchema);
 
-module.exports = Accidents;
+module.exports = Accident;
