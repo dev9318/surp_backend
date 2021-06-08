@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+const dbURI = process.env.dbURI;
+
 // the express app
 const app = express();
 
