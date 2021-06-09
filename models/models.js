@@ -20,15 +20,15 @@ const AccidentSchema = new Schema({
         required: [true, 'field is required']
     },
     Deaths: {
-        type: Number,
-        required: [true, 'field is required']
+        type: String,
+        // required: [true, 'field is required']
     },
     Injured: {
-        type: Number,
-        required: [true, 'field is required']
+        type: String,
+        // required: [true, 'field is required']
     },
     Source: {
-        type: String,
+        type: [String],
         required: [true, 'field is required']
     },
 
