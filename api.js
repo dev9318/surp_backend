@@ -63,7 +63,7 @@ app.get('/', (request, response)=> {
   var offset = Number(request.query.offset) || 0;
   
   var sort = request.query.sortby || "Date";
-  var sortType = request.query.type || -1;
+  var sortType = request.query.sortType || -1;
   
   var filters = {};
 
