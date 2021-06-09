@@ -51,10 +51,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 // });
 
 
-
-app.get('/', (request, response)=>{
-
-
+app.get('/', (request, response)=> {
 
   var Options = {
     Type: request.query.type || null,
@@ -76,19 +73,15 @@ app.get('/', (request, response)=>{
     }
   }
 
-  try {
-    var accidents = await Accident.find(filters).sort([[sort, sortType]]).skip(offset).limit(limit);
-
-    response.json({data:accidents});
-
-  }
-  catch(e) {
+  Accident.find(filters).sort([[sort, sortType]])
+  .skip(offset).limit(limit).exec().then(
+    (result) =>{
+      response.json({data:result});
+    }
+  ).catch((e) =>{
     console.log("[Error] An error occured");
     console.log(e);
     response.json({'message': 'error occured'});
-  }
-
-
-  response.json({"message":"hey"});
+  });
 
 });
