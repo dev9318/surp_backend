@@ -62,7 +62,7 @@ app.get('/', (request, response)=> {
   var limit = Number(request.query.limit) || 10;
   var offset = Number(request.query.offset) || 0;
   
-  var sort = request.query.sortby || "Date";
+  var sort = request.query.sortBy || "Date";
   var sortType = request.query.sortType || -1;
   
   var filters = {};
@@ -76,7 +76,16 @@ app.get('/', (request, response)=> {
   Accident.find(filters).sort([[sort, sortType]])
   .skip(offset).limit(limit).exec().then(
     (result) =>{
-      response.json({data:result});
+      Accident.find(filters).count().exec().then(
+        (res)=>{
+
+          response.json({data:result,count:res});
+          
+      }).catch((e)=>{
+        console.log("[Error] An error occured");
+        console.log(e);
+        response.json({'message': 'error occured'});
+      })
     }
   ).catch((e) =>{
     console.log("[Error] An error occured");
