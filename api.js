@@ -27,22 +27,68 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 }))
   .catch(err => console.log(err));
 
+  mongoose.Promise = global.Promise;
+  
+
+// app.get('/', (request, response)=>{
+//   const acc = new Accident({
+//     Date: today.getDate(),
+//     Type: 'Gas',
+//     Location: 'Delhi',
+//     Company: 'abc inc',
+//     Deaths: 3,
+//     Injured: 2,
+//     Source: 'source'
+//   });
+//   acc.save()
+//     .then(result => {
+//       console.log(result);
+//       response.send('done');
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// });
+
+
+
 app.get('/', (request, response)=>{
-  const acc = new Accident({
-    Date: today.getDate(),
-    Type: 'Gas',
-    Location: 'Delhi',
-    Company: 'abc inc',
-    Deaths: 3,
-    Injured: 2,
-    Source: 'source'
-  });
-  acc.save()
-    .then(result => {
-      console.log(result);
-      response.send('done');
-    })
-    .catch(err => {
-      console.log(err);
-    });
+
+
+
+  var Options = {
+    Type: request.query.type || null,
+    Location: request.query.location || null,
+    Company: request.query.company || null
+  };
+
+  var limit = request.query.limit || 10;
+  var offset = request.query.offset || 0;
+  
+  var sort = request.query.sortby || "Date";
+  var sortType = request.query.type || -1;
+  
+  var filters = {};
+
+  for(const [key, value] of Object.entries(Options)){
+    if(value != null){
+      filter[key] = {"$regrex":value, "$options":'i'};
+    }
+  }
+
+  try {
+    var accidents = await Accident.find(filters).sort([[sort, sortType]]).skip(offset).limit(limit);
+
+    response.json({data:accidents});
+
+  }
+  catch(e) {
+    console.log("[Error] An error occured");
+    console.log(e);
+    response.json({'message': 'error occured'});
+  }
+
+
+  response.json({"message":"hey"});
+
 });
