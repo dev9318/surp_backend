@@ -69,7 +69,7 @@ app.get('/', (request, response)=> {
 
   for(const [key, value] of Object.entries(Options)){
     if(value != null){
-      filters[key] = {"$regrex":value, "$options":'i'};
+      filters[key] = new RegExp(value,'i');
     }
   }
 
