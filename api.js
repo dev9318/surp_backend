@@ -59,8 +59,8 @@ app.get('/', (request, response)=> {
     Company: request.query.company || null
   };
 
-  var limit = request.query.limit || 10;
-  var offset = request.query.offset || 0;
+  var limit = Number(request.query.limit) || 10;
+  var offset = Number(request.query.offset) || 0;
   
   var sort = request.query.sortby || "Date";
   var sortType = request.query.type || -1;
