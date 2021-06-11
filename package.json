@@ -15,7 +15,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node api"
+    "test": "node api",
+    "build": "cd surp_frontend && npm install && npm run build"
   },
   "repository": {
     "type": "git",
@@ -26,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/dev9318/surp_backend/issues"
   },
-  "homepage": "https://github.com/dev9318/surp_backend#readme"
+  "homepage": "https://github.com/dev9318/surp_backend#readme",
+  "engines": {
+    "node": "v14.17.0"
+  }
 }
