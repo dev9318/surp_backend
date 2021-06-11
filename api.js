@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(result => app.listen(process.env.port || 4000, function(){
+  .then(result => app.listen(process.env.PORT || 4000, function(){
     console.log('app is now listening for requests and is connected to mongodb');
 }))
   .catch(err => console.log(err));

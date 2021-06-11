@@ -27,8 +27,5 @@
   "bugs": {
     "url": "https://github.com/dev9318/surp_backend/issues"
   },
-  "homepage": "https://github.com/dev9318/surp_backend#readme",
-  "engines": {
-    "node": "v10.19.0"
-  }
+  "homepage": "https://github.com/dev9318/surp_backend#readme"
 }
