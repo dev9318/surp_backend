@@ -1,1 +1,1 @@
-web: node api.js -p $PORT
+worker: node api.js
