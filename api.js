@@ -53,6 +53,8 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.get('/', (request, response)=> {
 
+  console.log('Reached site');
+
   var Options = {
     Type: request.query.type || null,
     Location: request.query.location || null,
@@ -93,4 +95,8 @@ app.get('/', (request, response)=> {
     response.json({'message': 'error occured'});
   });
 
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../surp_frontend/build', 'index.html'));
 });

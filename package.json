@@ -1,0 +1,32 @@
+{
+  "name": "surp_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd surp_frontend && npm install && npm run build"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swan28pande/surp_backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/swan28pande/surp_backend/issues"
+  },
+  "homepage": "https://github.com/swan28pande/surp_backend#readme",
+  "dependencies": {
+    "all": "0.0.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.13",
+    "morgan": "^1.10.0"
+  },
+  "engines": {
+    "node": "v14.17.0"
+  }
+}
