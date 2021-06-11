@@ -94,3 +94,42 @@ app.get('/', (request, response)=> {
   });
 
 });
+
+
+app.post('/', (request, res)=> {
+
+  try{
+    var Type = request.body.type || res.send({'message':'invalid data'});
+    var Location = request.body.location || res.send({'message':'invalid data'});
+    var Company = request.body.company || res.send({'message':'invalid data'});
+    var Date = request.body.date || res.send({'message':'invalid data'});
+    var Deaths = request.body.deaths || res.send({'message':'invalid data'});
+    var Injured = request.body.injured || res.send({'message':'invalid data'});
+    var Court = request.body.court || '';
+    var News = request.body.news || '';
+    var Report = request.body.report || '';
+  }
+  catch(e){
+    console.log(e);
+  }
+    
+
+  const acc = new Accident({
+        Date: Date,
+        Type: Type,
+        Location: Location,
+        Company: Company,
+        Deaths: Deaths,
+        Injured: Injured,
+        Source: [Court, News, Report]
+      });
+      acc.save()
+        .then(result => {
+          console.log(result);
+          response.send('added record to the database');
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+});
