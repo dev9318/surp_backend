@@ -21,6 +21,12 @@ app.use(bodyParser.json());
 // set up morgan for console entries
 app.use(morgan('dev'));
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+  });
+
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(result => app.listen(process.env.PORT || 4000, function(){
     console.log('app is now listening for requests and is connected to mongodb');
