@@ -139,3 +139,20 @@ app.post('/', (request, res)=> {
         });
 
 });
+
+app.get('/group',(req,response)=>{
+  var group = req.query.group;
+  if(group){
+    Accident.aggregate([
+      {$group:{_id:`$${group}`, count:{$sum:1}}}
+    ]).exec().then(
+      (result) =>{
+         response.json({data:result});
+      }
+    ).catch((e) =>{
+      console.log("[Error] An error occured");
+      console.log(e);
+      response.json({'message': 'error occured'});
+    });
+  }
+})
