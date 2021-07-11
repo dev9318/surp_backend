@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const today = new Date();
 
 const Accident = require('./models/models');
+const { isObject } = require("lodash");
 
 require('dotenv').config();
 
@@ -82,9 +83,8 @@ app.get('/', (request, response)=> {
   Accident.find(filters).sort([[sort, sortType]])
   .skip(offset).limit(limit).exec().then(
     (result) =>{
-      Accident.find(filters).count().exec().then(
+      Accident.find(filters).countDocuments().exec().then(
         (res)=>{
-
           response.json({data:result,count:res});
           
       }).catch((e)=>{
@@ -142,8 +142,18 @@ app.post('/', (request, res)=> {
 
 app.get('/group',(req,response)=>{
   var group = req.query.group;
+  var startDate = req.query.startDate || "1000-01-01";
+  var endDate = req.query.endDate || "3000-01-01";
+  startDate = startDate + "T00:00:00.000Z";
+  endDate = endDate + "T00:00:00.000Z";
   if(group){
     Accident.aggregate([
+      {$match:{
+        Date: {
+          $gte: new Date(startDate),
+          $lt: new Date(endDate)
+      }
+      }},
       {$group:{_id:`$${group}`, count:{$sum:1}}}
     ]).exec().then(
       (result) =>{
