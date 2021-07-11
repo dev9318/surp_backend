@@ -82,9 +82,8 @@ app.get('/', (request, response)=> {
   Accident.find(filters).sort([[sort, sortType]])
   .skip(offset).limit(limit).exec().then(
     (result) =>{
-      Accident.find(filters).count().exec().then(
+      Accident.find(filters).countDocuments().exec().then(
         (res)=>{
-
           response.json({data:result,count:res});
           
       }).catch((e)=>{
