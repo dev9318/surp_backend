@@ -119,6 +119,7 @@ app.post('/', (request, res)=> {
   }
   catch(e){
     console.log(e);
+    res.end();
   }
     
 
@@ -171,15 +172,22 @@ app.get('/group',(req,response)=>{
 
 
 app.post('/form',(req,res)=>{
-  console.log(JSON.parse(req.body));
-  const acc = new AccidentStage(JSON.parse(req.body));
+  try {
+    const acc = new AccidentStage(req.body);
+  }
+  catch(e){
+    console.log(e);
+    res.send('error encountered please check fields');
+    res.end();
+  }
+  
   acc.save()
     .then(result => {
       console.log(result);
-      response.send('added record to the database');
+      res.send('added record to the database');
     })
     .catch(err => {
       console.log(err);
-      response.send('error encountered please check fields');
+      res.send('error encountered please check fields');
     });
 })
