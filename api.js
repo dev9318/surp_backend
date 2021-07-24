@@ -174,20 +174,14 @@ app.get('/group',(req,response)=>{
 app.post('/form',(req,res)=>{
   try {
     const acc = new AccidentStage(req.body);
-  }
-  catch(e){
-    console.log(e);
-    res.send('error encountered please check fields');
-    res.end();
-  }
-  
-  acc.save()
+    acc.save()
     .then(result => {
       console.log(result);
       res.send('added record to the database');
     })
-    .catch(err => {
-      console.log(err);
-      res.send('error encountered please check fields');
-    });
+  }
+  catch(e){
+    console.log(e);
+    res.send('error encountered please check fields');
+  }
 })
