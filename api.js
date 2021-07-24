@@ -7,6 +7,8 @@ const today = new Date();
 
 const Accident = require('./models/models');
 const { isObject } = require("lodash");
+const AccidentStage = require("./models/models");
+const { response } = require("express");
 
 require('dotenv').config();
 
@@ -165,4 +167,18 @@ app.get('/group',(req,response)=>{
       response.json({'message': 'error occured'});
     });
   }
+})
+
+
+app.post('/form',(req,res)=>{
+  const acc = new AccidentStage(req.body);
+  acc.save()
+    .then(result => {
+      console.log(result);
+      response.send('added record to the database');
+    })
+    .catch(err => {
+      console.log(err);
+      response.send('error encountered please check fields');
+    });
 })
