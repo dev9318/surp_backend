@@ -185,3 +185,14 @@ app.post('/form',(req,res)=>{
     res.send('error encountered please check fields');
   }
 })
+
+app.get('/form',(req,res)=>{
+  var limit = Number(request.query.limit) || 10;
+  var offset = Number(request.query.offset) || 0;
+  AccidentStage.find().skip(offset).limit(limit).exec().then((result)=>{
+    response.json(result);
+  }).catch((e)=>{
+    console.log(e);
+
+  })
+})
