@@ -171,7 +171,8 @@ app.get('/group',(req,response)=>{
 
 
 app.post('/form',(req,res)=>{
-  const acc = new AccidentStage(req.body);
+  console.log(JSON.parse(req.body));
+  const acc = new AccidentStage(JSON.parse(req.body));
   acc.save()
     .then(result => {
       console.log(result);
