@@ -5,9 +5,8 @@ const morgan = require('morgan');
 
 const today = new Date();
 
-const Accident = require('./models/models');
+const {Accident, AccidentStage} = require('./models/models');
 const { isObject } = require("lodash");
-const AccidentStage = require("./models/models");
 const { response } = require("express");
 
 require('dotenv').config();
@@ -58,6 +57,62 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 //       console.log(err);
 //     });
 // });
+
+
+app.get('/group',(req,response)=>{
+  var group = req.query.group;
+  var startDate = req.query.startDate || "1000-01-01";
+  var endDate = req.query.endDate || "3000-01-01";
+  startDate = startDate + "T00:00:00.000Z";
+  endDate = endDate + "T00:00:00.000Z";
+  if(group){
+    Accident.aggregate([
+      {$match:{
+        Date: {
+          $gte: new Date(startDate),
+          $lt: new Date(endDate)
+      }
+      }},
+      {$group:{_id:`$${group}`, count:{$sum:1}}}
+    ]).exec().then(
+      (result) =>{
+         response.json({data:result});
+      }
+    ).catch((e) =>{
+      console.log("[Error] An error occured");
+      console.log(e);
+      response.json({'message': 'error occured'});
+    });
+  }
+})
+
+
+app.post('/form',(req,res)=>{
+  try {
+    const acc = new AccidentStage(req.body);
+    acc.save()
+    .then(result => {
+      console.log(result);
+      res.send('added record to the database');
+    })
+  }
+  catch(e){
+    console.log(e);
+    res.send('error encountered please check fields');
+  }
+})
+
+app.get('/form',(request,response)=>{
+  var limit = Number(request.query.limit) || 10;
+  var offset = Number(request.query.offset) || 0;
+  AccidentStage.find().skip(offset).limit(limit).exec().then((result)=>{
+    response.json(result);
+  }).catch((e)=>{
+    console.log(e);
+    response.send("Sorry some error occured");
+  })
+})
+
 
 
 app.get('/', (request, response)=> {
@@ -142,57 +197,3 @@ app.post('/', (request, res)=> {
         });
 
 });
-
-app.get('/group',(req,response)=>{
-  var group = req.query.group;
-  var startDate = req.query.startDate || "1000-01-01";
-  var endDate = req.query.endDate || "3000-01-01";
-  startDate = startDate + "T00:00:00.000Z";
-  endDate = endDate + "T00:00:00.000Z";
-  if(group){
-    Accident.aggregate([
-      {$match:{
-        Date: {
-          $gte: new Date(startDate),
-          $lt: new Date(endDate)
-      }
-      }},
-      {$group:{_id:`$${group}`, count:{$sum:1}}}
-    ]).exec().then(
-      (result) =>{
-         response.json({data:result});
-      }
-    ).catch((e) =>{
-      console.log("[Error] An error occured");
-      console.log(e);
-      response.json({'message': 'error occured'});
-    });
-  }
-})
-
-
-app.post('/form',(req,res)=>{
-  try {
-    const acc = new AccidentStage(req.body);
-    acc.save()
-    .then(result => {
-      console.log(result);
-      res.send('added record to the database');
-    })
-  }
-  catch(e){
-    console.log(e);
-    res.send('error encountered please check fields');
-  }
-})
-
-app.get('/form',(req,res)=>{
-  var limit = Number(request.query.limit) || 10;
-  var offset = Number(request.query.offset) || 0;
-  AccidentStage.find().skip(offset).limit(limit).exec().then((result)=>{
-    response.json(result);
-  }).catch((e)=>{
-    console.log(e);
-
-  })
-})
