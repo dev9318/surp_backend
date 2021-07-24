@@ -36,8 +36,6 @@ const AccidentSchema = new Schema({
 
 const Accident = mongoose.model('accidents', AccidentSchema);
 
-module.exports = Accident;
-
 const AccidentStageSchema = new Schema({
     author: {
         type: String,
@@ -71,4 +69,4 @@ const AccidentStageSchema = new Schema({
 
 const AccidentStage = mongoose.model('accidents-stage', AccidentStageSchema);
 
-module.exports = AccidentStage;
+module.exports = {Accident, AccidentStage};
