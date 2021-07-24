@@ -37,3 +37,38 @@ const AccidentSchema = new Schema({
 const Accident = mongoose.model('accidents', AccidentSchema);
 
 module.exports = Accident;
+
+const AccidentStageSchema = new Schema({
+    author: {
+        type: String,
+        required: [true, 'field is required']
+    },
+    location: {
+        type: String,
+        required: [true, 'field is required']
+    },
+    industry: {
+        type: String,
+        required: [true, 'field is required']
+    },
+    details: {
+        type: String,
+        required: [true, 'field is required']
+    },
+    selectedDate: {
+        type: String,
+        required: [true, 'field is required']
+    },
+    keyword: {
+        type: [String],
+        required: [true, 'field is required']
+    },
+    type: {
+        type: String,
+        required: [true, 'field is required']
+    },
+},{ timestamps: true });
+
+const AccidentStage = mongoose.model('accidents-stage', AccidentStageSchema);
+
+module.exports = AccidentStage;
